@@ -8,14 +8,13 @@ if "gesamt_minuten" not in st.session_state:
     st.session_state.gesamt_minuten = 0
     st.session_state.zeiten_liste = []
 
-col1, col2, col3, col4 = st.columns([1, 2, 2, 1])
+col0, col1, col2 = st.columns([1, 2, 2])
+operation = col0.selectbox("Operation", ["+", "-"])
 
-operation = col1.radio("", ["+", "-"], horizontal=False)
-stunden = col2.number_input("Stunden", min_value=0, max_value=1000, step=1, value=0)
-minuten = col3.number_input("Minuten", min_value=0, max_value=59, step=1, value=0)
+stunden = col1.number_input("Stunden", min_value=0, max_value=1000, step=1, value=0)
+minuten = col2.number_input("Minuten", min_value=0, max_value=59, step=1, value=0)
 
-# Zeige das ausgewählte Symbol direkt neben Stunden und Minuten
-col4.markdown(f"### {operation}")
+st.markdown(f"**Eingabe: {operation} {stunden}h {minuten}m**")
 
 if st.button("➕ Zeit hinzufügen"):
     ges_min = stunden * 60 + minuten
