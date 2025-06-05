@@ -4,42 +4,36 @@ st.set_page_config(page_title="Zeitrechner", layout="centered")
 
 st.title("⏱ Zeitrechner")
 
-# Session-State initialisieren
 if "gesamt_minuten" not in st.session_state:
     st.session_state.gesamt_minuten = 0
     st.session_state.zeiten_liste = []
 
-# Eingabe
-col1, col2, col3 = st.columns([1,1,2])
+col1, col2, col3 = st.columns([1, 1, 2])
 stunden = col1.number_input("Stunden", min_value=0, max_value=1000, step=1, value=0, key="stunden_input")
 minuten = col2.number_input("Minuten", min_value=0, max_value=59, step=1, value=0, key="minuten_input")
 operation = col3.radio("Operation", ["+", "-"], index=0, horizontal=True)
 
-# Zeit hinzufügen Button
 zeit_hinzufuegen = st.button("➕ Zeit übernehmen")
 
 if zeit_hinzufuegen:
     ges_min = stunden * 60 + minuten
-    # Plus/Minus fetter und farbig
     if operation == "+":
         st.session_state.gesamt_minuten += ges_min
-        op_str = ":green[+] "
+        op_str = "+ "
     else:
         st.session_state.gesamt_minuten -= ges_min
-        op_str = ":red[-] "
+        op_str = "- "
 
     st.session_state.zeiten_liste.append(f"{op_str}{stunden}h {minuten}min")
     st.experimental_rerun()
 
-# Liste der Eingaben
 st.subheader("📋 Bisherige Eingaben:")
 if st.session_state.zeiten_liste:
     for i, eintrag in enumerate(st.session_state.zeiten_liste, start=1):
-        st.markdown(f"{i}. {eintrag}")
+        st.write(f"{i}. {eintrag}")
 else:
     st.info("Noch keine Zeiten hinzugefügt.")
 
-# Ergebnis berechnen
 gesamt = st.session_state.gesamt_minuten
 vorz = "-" if gesamt < 0 else ""
 std = abs(gesamt) // 60
@@ -50,7 +44,6 @@ st.subheader("🧮 Ergebnis:")
 st.success(f"{vorz}{std} Stunden, {min_} Minuten")
 st.code(f"{dezimal:.2f} Stunden (Dezimal)", language="text")
 
-# Zurücksetzen Button
 reset = st.button("🔄 Alles zurücksetzen")
 if reset:
     st.session_state.gesamt_minuten = 0
