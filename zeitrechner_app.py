@@ -9,11 +9,12 @@ if "gesamt_minuten" not in st.session_state:
     st.session_state.gesamt_minuten = 0
     st.session_state.zeiten_liste = []
 
-# Eingabe
-col1, col2, col3 = st.columns(3)
+# Eingabe mit klar sichtbarer Operation
+col1, col2, col3 = st.columns([2, 2, 1])
 stunden = col1.number_input("Stunden", min_value=0, max_value=1000, step=1, value=0)
 minuten = col2.number_input("Minuten", min_value=0, max_value=59, step=1, value=0)
-operation = col3.radio("Operation", ["+", "-"], horizontal=True)
+col3.markdown("**Operation**")
+operation = col3.radio("", ["+", "-"], horizontal=True)
 
 # Zeit hinzufügen
 if st.button("➕ Zeit hinzufügen"):
@@ -28,7 +29,7 @@ if st.button("➕ Zeit hinzufügen"):
 st.subheader("📋 Hinzugefügte Zeiten:")
 if st.session_state.zeiten_liste:
     for i, (op, h, m) in enumerate(st.session_state.zeiten_liste, start=1):
-        st.write(f"{i}. {op} {h}h {m}m")  # hier + oder - sichtbar
+        st.write(f"{i}. {op} {h}h {m}m")
 else:
     st.info("Noch keine Zeiten hinzugefügt.")
 
