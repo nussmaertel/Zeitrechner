@@ -27,7 +27,7 @@ if st.button("➕ Zeit hinzufügen"):
 st.subheader("📋 Hinzugefügte Zeiten:")
 if st.session_state.zeiten_liste:
     for i, (op, h, m) in enumerate(st.session_state.zeiten_liste, start=1):
-        st.write(f"{i}. {op} {h}h {m}m")
+        st.markdown(f"{i}. **{op}** {h}h {m}m")
 else:
     st.info("Noch keine Zeiten hinzugefügt.")
 
